@@ -38,10 +38,10 @@ fi
 
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so
-VCPKG_ROOT=$HOME/vcpkg cargo build --release
+VCPKG_ROOT=$HOME/vcpkg cargo build --release || exit -1
 # see result in target/release
 
-cd /root
+cd $HOME
 DELIVERY=$HOME/rustdesk-bin
 mkdir -p $DELIVERY
 cp -p rustdesk/target/release/libsciter-gtk.so $DELIVERY
