@@ -8,7 +8,7 @@ index 74982de..875cb51 100644
      pub fn get_rendezvous_server() -> String {
 -        let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
 +        // let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
-+        let mut rendezvous_server = "MYSERVERIP:MYPORT";
++        let mut rendezvous_server = String::from("MYSERVERIP:MYPORT");
          if rendezvous_server.is_empty() {
              rendezvous_server = CONFIG2.write().unwrap().rendezvous_server.clone();
          }
