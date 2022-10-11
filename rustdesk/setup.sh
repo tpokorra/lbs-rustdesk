@@ -44,8 +44,16 @@ VCPKG_ROOT=$HOME/vcpkg cargo build --release || exit -1
 cd $HOME
 DELIVERY=$HOME/rustdesk-bin
 mkdir -p $DELIVERY
-cp -p rustdesk/target/release/libsciter-gtk.so $DELIVERY
-cp -p rustdesk/target/release/rustdesk $DELIVERY
+cp rustdesk/target/release/libsciter-gtk.so $DELIVERY
+cp rustdesk/target/release/rustdesk $DELIVERY
+mkdir -p $DELIVERY/src/ui
+cp rustdesk/src/ui/* $DELIVERY/src/ui
+cat > $DELIVERY/rustdesk.sh << FINISH
+#!/bin/bash
+cd /usr/share/rustdesk
+./rustdesk
+FINISH
+chmod a+x $DELIVERY/rustdesk.sh
 mkdir -p $HOME/sources
 tar czf $HOME/sources/rustdesk-bin.tar.gz $DELIVERY
 
