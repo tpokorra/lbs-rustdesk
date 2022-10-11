@@ -54,6 +54,19 @@ cd /usr/share/rustdesk
 ./rustdesk
 FINISH
 chmod a+x $DELIVERY/rustdesk.sh
+cat > $DELIVERY/rustdesk.desktop << FINISH
+[Desktop Entry]
+Encoding=UTF-8
+Comment=A remote control software.
+Exec=rustdesk
+Icon=rustdesk
+Name=RustDesk
+Terminal=false
+Type=Application
+MimeType=
+Version=$rustdesk_client_version
+FINISH
+cp rustdesk/snap/gui/rustdesk.png $DELIVERY
 mkdir -p $HOME/sources
 tar czf $HOME/sources/rustdesk-bin.tar.gz $DELIVERY
 
