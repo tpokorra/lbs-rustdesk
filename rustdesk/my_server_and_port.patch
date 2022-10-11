@@ -1,14 +1,29 @@
 diff --git a/libs/hbb_common/src/config.rs b/libs/hbb_common/src/config.rs
-index 74982de..875cb51 100644
+index 74982de..ed8343d 100644
 --- a/libs/hbb_common/src/config.rs
 +++ b/libs/hbb_common/src/config.rs
-@@ -360,7 +360,8 @@ impl Config {
+@@ -359,7 +359,16 @@ impl Config {
+         SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 0)
      }
  
++    pub fn set_own_rendezvous_server() -> String {
++        let rendezvous_server = String::from("MYSERVERIP:MYPORT")
++        Self::set_option("custom-rendezvous-server", rendezvous_server);
++        Self::set_option("rendezvous_server", rendezvous_server);
++        Self::set_option("rendezvous-servers", rendezvous_server);
++        rendezvous_server
++    }
++
      pub fn get_rendezvous_server() -> String {
--        let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
-+        // let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
-+        let mut rendezvous_server = String::from("MYSERVERIP:MYPORT");
++        Self::set_own_rendezvous_server();
+         let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
          if rendezvous_server.is_empty() {
              rendezvous_server = CONFIG2.write().unwrap().rendezvous_server.clone();
-         }
+@@ -377,6 +386,7 @@ impl Config {
+     }
+ 
+     pub fn get_rendezvous_servers() -> Vec<String> {
++        Self::set_own_rendezvous_server();
+         let s = Self::get_option("custom-rendezvous-server");
+         if !s.is_empty() {
+             return vec![s];
