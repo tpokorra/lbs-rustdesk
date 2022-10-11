@@ -30,7 +30,7 @@ install: build
 	# Add here commands to install the package into debian/gentoo.
 	mkdir -p $(CURDIR)/debian/rustdesk/usr/bin
 	cp /tmp/buildroot/rustdesk $(CURDIR)/debian/rustdesk/usr/bin/rustdesk
-    mkdir -p $(CURDIR)/debian/rustdesk/usr/lib/rustdesk
+	mkdir -p $(CURDIR)/debian/rustdesk/usr/lib/rustdesk
 	cp /tmp/buildroot/libsciter-gtk.so $(CURDIR)/debian/rustdesk/usr/lib/rustdesk
 
 
