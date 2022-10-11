@@ -1,0 +1,11 @@
+Source: rustdesk
+Section: unknown
+Priority: extra
+Maintainer: Timotheus Pokorra <timotheus.pokorra@solidcharity.com>
+Standards-Version: 3.9.2
+Homepage: https://www.solidcharity.com
+
+Package: rustdesk
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Binaries for running the rustdesk client against my own rustdesk server

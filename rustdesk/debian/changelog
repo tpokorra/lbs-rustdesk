@@ -1,0 +1,3 @@
+rustdesk (1.0.0-%{release}) unstable; urgency=low
+  * initial version
+ -- Timotheus Pokorra <timotheus.pokorra@solidcharity.com>  Tue, 11 Oct 2022 15:00:00 +0200
