@@ -2,15 +2,17 @@ diff --git a/libs/hbb_common/src/config.rs b/libs/hbb_common/src/config.rs
 index 74982de..ed8343d 100644
 --- a/libs/hbb_common/src/config.rs
 +++ b/libs/hbb_common/src/config.rs
-@@ -359,7 +359,16 @@ impl Config {
+@@ -359,7 +359,18 @@ impl Config {
          SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 0)
      }
  
 +    pub fn set_own_rendezvous_server() -> String {
 +        let rendezvous_server = "MYSERVERIP:MYPORT";
++        let relay_server = "MYSERVERIP:MYRELAYPORT";
 +        Self::set_option(String::from("custom-rendezvous-server"), String::from(rendezvous_server));
 +        Self::set_option(String::from("rendezvous_server"), String::from(rendezvous_server));
 +        Self::set_option(String::from("rendezvous-servers"), String::from(rendezvous_server));
++        Self::set_option(String::from("relay-server"), String::from(relay_server));
 +        String::from(rendezvous_server)
 +    }
 +

@@ -4,7 +4,7 @@ branch=$1
 rustdesk_client_version=1.1.9
 vcpkg_version=2021.12.01
 
-# load MYSERVERIP and MYPORT env variables
+# load MYSERVERIP and MYPORT and MYRELAYPORT env variables
 if [ -f $HOME/.ssh/my_server_and_port.sh ]
 then
     . $HOME/.ssh/my_server_and_port.sh
@@ -33,6 +33,7 @@ if [ ! -z $MYSERVERIP ]
 then
     echo "applying our own server ip and port"
     sed -i "s/MYSERVERIP:MYPORT/$MYSERVERIP:$MYPORT/g" $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
+    sed -i "s/MYSERVERIP:MYRELAYPORT/$MYSERVERIP:$MYRELAYPORT/g" $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
     patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
 fi
 
