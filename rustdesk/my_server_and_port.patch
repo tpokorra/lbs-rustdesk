@@ -8,9 +8,9 @@ index 74982de..ed8343d 100644
  
 +    pub fn set_own_rendezvous_server() -> String {
 +        let rendezvous_server = String::from("MYSERVERIP:MYPORT")
-+        Self::set_option("custom-rendezvous-server", rendezvous_server);
-+        Self::set_option("rendezvous_server", rendezvous_server);
-+        Self::set_option("rendezvous-servers", rendezvous_server);
++        Self::set_option(String::from("custom-rendezvous-server"), rendezvous_server);
++        Self::set_option(String::from("rendezvous_server"), rendezvous_server);
++        Self::set_option(String::from("rendezvous-servers"), rendezvous_server);
 +        rendezvous_server
 +    }
 +
