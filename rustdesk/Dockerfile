@@ -1,1 +1,2 @@
+RUN apt update
 RUN apt install -y zip patch g++ gcc git curl wget nasm yasm libgtk-3-dev clang libxcb-randr0-dev libxdo-dev libxfixes-dev libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev libpulse-dev cmake libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
