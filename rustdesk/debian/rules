@@ -37,8 +37,8 @@ install: build
 	cp /tmp/buildroot/rustdesk-bin/src/ui/* $(CURDIR)/debian/rustdesk/usr/share/rustdesk/src/ui/
 	mkdir -p $(CURDIR)/debian/rustdesk/usr/share/applications
 	cp /tmp/buildroot/rustdesk-bin/rustdesk.desktop $(CURDIR)/debian/rustdesk/usr/share/applications
-	mkdir -p $(CURDIR)/debian/rustdesk/usr/share/icons/hicolor/256x256@2x/apps
-	cp /tmp/buildroot/rustdesk-bin/rustdesk.png $(CURDIR)/debian/rustdesk/usr/share/icons/hicolor/256x256@2x/apps
+	mkdir -p $(CURDIR)/debian/rustdesk/usr/share/icons/hicolor/256x256/apps
+	cp /tmp/buildroot/rustdesk-bin/rustdesk.png $(CURDIR)/debian/rustdesk/usr/share/icons/hicolor/256x256/apps
 
 # Build architecture-independent files here.
 binary-indep: build install
