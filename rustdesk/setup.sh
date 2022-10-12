@@ -21,9 +21,9 @@ cd ..
 export VCPKG_ROOT=$HOME/vcpkg
 ./vcpkg/vcpkg install libvpx libyuv opus
 
+# install rust build environment
 curl -sSf https://sh.rustup.rs > rustup.sh
 sh rustup.sh -y
-source $HOME/.cargo/env
 
 git clone https://github.com/rustdesk/rustdesk.git
 cd rustdesk
@@ -33,6 +33,9 @@ patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
 
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so
+
+# the actual build of rustdesk client
+source $HOME/.cargo/env
 VCPKG_ROOT=$HOME/vcpkg cargo build --release || exit -1
 # see result in target/release
 
