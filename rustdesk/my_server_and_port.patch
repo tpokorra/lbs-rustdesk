@@ -8,14 +8,14 @@ index 919e873..ed7934e 100644
              return;
 +        } else if args[0] == "--rendezvous_server" {
 +            if args.len() >= 2 {
-+                let rendezvous_server = args[1].to_owned();
++                let rendezvous_server = &args[1];
 +                hbb_common::config::Config::set_option(String::from("custom-rendezvous-server"), String::from(rendezvous_server));
 +                hbb_common::config::Config::set_option(String::from("rendezvous_server"), String::from(rendezvous_server));
 +                hbb_common::config::Config::set_option(String::from("rendezvous-servers"), String::from(rendezvous_server));
 +            }
 +            if args.len() >= 4 {
 +                if args[2] == "--relay_server" {
-+                    let relay_server = args[3].to_owned();
++                    let relay_server = &args[3];
 +                    hbb_common::config::Config::set_option(String::from("relay-server"), String::from(relay_server));
 +                }
 +            }
