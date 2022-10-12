@@ -28,14 +28,8 @@ source $HOME/.cargo/env
 git clone https://github.com/rustdesk/rustdesk.git
 cd rustdesk
 git checkout $rustdesk_client_version -b v$rustdesk_client_version
-
-if [ ! -z $MYSERVERIP ]
-then
-    echo "applying our own server ip and port"
-    sed -i "s/MYSERVERIP:MYPORT/$MYSERVERIP:$MYPORT/g" $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
-    sed -i "s/MYSERVERIP:MYRELAYPORT/$MYSERVERIP:$MYRELAYPORT/g" $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
-    patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
-fi
+# applying patch to set rendezvous and relay servers as command line parameters
+patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
 
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so
@@ -52,8 +46,13 @@ cp rustdesk/src/ui/* $DELIVERY/src/ui
 cat > $DELIVERY/rustdesk.sh << FINISH
 #!/bin/bash
 cd /usr/share/rustdesk
-./rustdesk
 FINISH
+if [ ! -z $MYSERVERIP ]
+then
+    echo "./rustdesk --rendezvous_server $MYSERVERIP:$MYPORT --relay_server $MYSERVERIP:$MYRELAYPORT" >> $DELIVERY/rustdesk.sh
+else
+    echo "./rustdesk" >> $DELIVERY/rustdesk.sh
+fi
 chmod a+x $DELIVERY/rustdesk.sh
 cat > $DELIVERY/rustdesk.desktop << FINISH
 [Desktop Entry]

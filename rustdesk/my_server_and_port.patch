@@ -1,31 +1,24 @@
-diff --git a/libs/hbb_common/src/config.rs b/libs/hbb_common/src/config.rs
-index 74982de..ed8343d 100644
---- a/libs/hbb_common/src/config.rs
-+++ b/libs/hbb_common/src/config.rs
-@@ -359,7 +359,18 @@ impl Config {
-         SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 0)
+diff --git a/src/main.rs b/src/main.rs
+index 919e873..ed7934e 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -103,6 +103,19 @@ fn main() {
+                 ipc::set_password(args[1].to_owned()).unwrap();
+             }
+             return;
++        } else if args[0] == "--rendezvous_server" {
++            if args.len() >= 2 {
++                let rendezvous_server = args[1].to_owned();
++                hbb_common::config::Config::set_option(String::from("custom-rendezvous-server"), String::from(rendezvous_server)).unwrap();
++                hbb_common::config::Config::set_option(String::from("rendezvous_server"), String::from(rendezvous_server)).unwrap();
++                hbb_common::config::Config::set_option(String::from("rendezvous-servers"), String::from(rendezvous_server)).unwrap();
++            }
++            if args.len() >= 4 {
++                if args[2] == "--relay_server" {
++                    let relay_server = args[3].to_owned();
++                    hbb_common::config::Config::set_option(String::from("relay-server"), String::from(relay_server)).unwrap();
++                }
++            }
+         }
      }
- 
-+    pub fn set_own_rendezvous_server() -> String {
-+        let rendezvous_server = "MYSERVERIP:MYPORT";
-+        let relay_server = "MYSERVERIP:MYRELAYPORT";
-+        Self::set_option(String::from("custom-rendezvous-server"), String::from(rendezvous_server));
-+        Self::set_option(String::from("rendezvous_server"), String::from(rendezvous_server));
-+        Self::set_option(String::from("rendezvous-servers"), String::from(rendezvous_server));
-+        Self::set_option(String::from("relay-server"), String::from(relay_server));
-+        String::from(rendezvous_server)
-+    }
-+
-     pub fn get_rendezvous_server() -> String {
-+        Self::set_own_rendezvous_server();
-         let mut rendezvous_server = Self::get_option("custom-rendezvous-server");
-         if rendezvous_server.is_empty() {
-             rendezvous_server = CONFIG2.write().unwrap().rendezvous_server.clone();
-@@ -377,6 +386,7 @@ impl Config {
-     }
- 
-     pub fn get_rendezvous_servers() -> Vec<String> {
-+        Self::set_own_rendezvous_server();
-         let s = Self::get_option("custom-rendezvous-server");
-         if !s.is_empty() {
-             return vec![s];
+     ui::start(&mut args[..]);
