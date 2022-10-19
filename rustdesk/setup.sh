@@ -52,10 +52,10 @@ cd /usr/share/rustdesk
 FINISH
 if [ ! -z $MYSERVERIP ]
 then
+    # setting the server details in the configuration
     echo "./rustdesk --rendezvous_server $MYSERVERIP:$MYPORT --relay_server $MYSERVERIP:$MYRELAYPORT" >> $DELIVERY/rustdesk.sh
-else
-    echo "./rustdesk" >> $DELIVERY/rustdesk.sh
 fi
+echo "./rustdesk" >> $DELIVERY/rustdesk.sh
 chmod a+x $DELIVERY/rustdesk.sh
 cat > $DELIVERY/rustdesk.desktop << FINISH
 [Desktop Entry]
