@@ -15,7 +15,7 @@ index 919e873..6cc1fab 100644
 +                let relay_server = &args[3];
 +                hbb_common::config::Config::set_option(String::from("relay-server"), String::from(relay_server));
 +
-+                # we only set the configuration here, start rustdesk again without parameters to run it.
++                // we only set the configuration here, start rustdesk again without parameters to run it.
 +                return;
 +            }
          }
