@@ -7,5 +7,5 @@ Homepage: https://www.solidcharity.com
 
 Package: rustdesk
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libxdo3
 Description: Binaries for running the rustdesk client against my own rustdesk server
