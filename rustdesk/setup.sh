@@ -10,7 +10,7 @@ then
     . $HOME/.ssh/my_server_and_port.sh
 fi
 
-apt install -y zip patch g++ gcc git curl wget nasm yasm libgtk-3-dev clang libxcb-randr0-dev libxdo-dev libxfixes-dev libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev libpulse-dev cmake libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+apt install -y zip patch python3-dev g++ gcc git curl wget nasm yasm libgtk-3-dev clang libxcb-randr0-dev libxdo-dev libxfixes-dev libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev libpulse-dev cmake libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
 cd $HOME
 git clone https://github.com/microsoft/vcpkg
@@ -34,9 +34,12 @@ patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so
 
+# prepare src/ui/inline.rs
+python3 inline-sciter.py
+
 # the actual build of rustdesk client
 source $HOME/.cargo/env
-VCPKG_ROOT=$HOME/vcpkg cargo build --release || exit -1
+VCPKG_ROOT=$HOME/vcpkg cargo build --release --features inline || exit -1
 # see result in target/release
 
 cd $HOME
@@ -44,8 +47,6 @@ DELIVERY=$HOME/rustdesk-bin
 mkdir -p $DELIVERY
 cp rustdesk/target/release/libsciter-gtk.so $DELIVERY
 cp rustdesk/target/release/rustdesk $DELIVERY
-mkdir -p $DELIVERY/src/ui
-cp rustdesk/src/ui/* $DELIVERY/src/ui
 cat > $DELIVERY/rustdesk.sh << FINISH
 #!/bin/bash
 cd /usr/share/rustdesk
