@@ -6,7 +6,7 @@ index 919e873..6cc1fab 100644
                  ipc::set_password(args[1].to_owned()).unwrap();
              }
              return;
-+        } else if args[1] == "--rendezvous_server" {
++        } else if args[0] == "--rendezvous_server" {
 +            if args.len() == 4 && args[2] == "--relay_server" {
 +                let rendezvous_server = &args[1];
 +                hbb_common::config::Config::set_option(String::from("custom-rendezvous-server"), String::from(rendezvous_server));
