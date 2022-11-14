@@ -30,6 +30,8 @@ cd rustdesk
 git checkout $rustdesk_client_version -b v$rustdesk_client_version
 # applying patch to set rendezvous and relay servers as command line parameters
 patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch
+# applying patch to fix issue: https://github.com/rustdesk/rustdesk/pull/1900
+patch -p1 < $HOME/lbs-rustdesk/fix_config_locks.patch
 
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so

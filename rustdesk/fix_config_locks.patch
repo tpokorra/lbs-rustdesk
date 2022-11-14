@@ -1,0 +1,53 @@
+From b2f7e7ece5a4812bbc0b0713a85158b81352d423 Mon Sep 17 00:00:00 2001
+From: Saverio Miroddi <saverio.pub2@gmail.com>
+Date: Tue, 1 Nov 2022 15:08:21 +0100
+Subject: [PATCH] hbb_common: Fix CONFIG locks unintentionally not acquired
+
+Variables defined as `_` only are released immediately; see compile error:
+
+    error: non-binding let on a synchronization lock
+      --> libs/hbb_common/src/config.rs:798:13
+        |
+    798 |         let _ = CONFIG.read().unwrap(); // for lock
+        |             ^   ^^^^^^^^^^^^^^^^^^^^^^ this binding will immediately drop the value assigned to it
+        |             |
+        |             this lock is not assigned to a binding and is immediately dropped
+        |
+        = note: `#[deny(let_underscore_lock)]` on by default
+
+By appending a phony suffix to the variable name, the lock stays in scope.
+---
+ libs/hbb_common/src/config.rs | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/libs/hbb_common/src/config.rs b/libs/hbb_common/src/config.rs
+index ad05855492c..9eb9cd369be 100644
+--- a/libs/hbb_common/src/config.rs
++++ b/libs/hbb_common/src/config.rs
+@@ -795,7 +795,7 @@ const PEERS: &str = "peers";
+ 
+ impl PeerConfig {
+     pub fn load(id: &str) -> PeerConfig {
+-        let _ = CONFIG.read().unwrap(); // for lock
++        let _lock = CONFIG.read().unwrap();
+         match confy::load_path(&Self::path(id)) {
+             Ok(config) => {
+                 let mut config: PeerConfig = config;
+@@ -827,7 +827,7 @@ impl PeerConfig {
+     }
+ 
+     pub fn store(&self, id: &str) {
+-        let _ = CONFIG.read().unwrap(); // for lock
++        let _lock = CONFIG.read().unwrap();
+         let mut config = self.clone();
+         config.password = encrypt_vec_or_original(&config.password, PASSWORD_ENC_VERSION);
+         config
+@@ -999,7 +999,7 @@ pub struct LanPeers {
+ 
+ impl LanPeers {
+     pub fn load() -> LanPeers {
+-        let _ = CONFIG.read().unwrap(); // for lock
++        let _lock = CONFIG.read().unwrap();
+         match confy::load_path(&Config::file_("_lan_peers")) {
+             Ok(peers) => peers,
+             Err(err) => {
