@@ -35,7 +35,7 @@ echo "apply patch my_server_and_port.patch"
 patch -p1 < $HOME/lbs-rustdesk/rustdesk/my_server_and_port.patch || exit -1
 echo "apply patch fix_config_locks.patch"
 # applying patch to fix issue: https://github.com/rustdesk/rustdesk/pull/1900
-patch -p1 < $HOME/lbs-rustdesk/fix_config_locks.patch || exit -1
+patch -p1 < $HOME/lbs-rustdesk/rustdesk/fix_config_locks.patch || exit -1
 
 mkdir -p target/release
 curl -sSf https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so > target/release/libsciter-gtk.so
